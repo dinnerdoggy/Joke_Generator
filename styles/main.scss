@@ -3,8 +3,17 @@
 
 
 body {
-  background-color: antiquewhite;
-  color: brown;
+  background-color: #474747;
+  color: #FBFBFB;
   text-align: center;
-  margin-top: 100px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  background-color: #000000;
+  color: #FBFBFB;
+  border: none;
 }
