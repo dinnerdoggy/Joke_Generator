@@ -1,12 +1,11 @@
-// USE WITH FIREBASE AUTH
-// import ViewDirectorBasedOnUserAuthStatus from '../utils/viewDirector';
 import 'bootstrap'; // import bootstrap elements and js
 import '../styles/main.scss';
 import getRequest from '../api/promises';
 
-// const jokeEndpoint = 'https://v2.jokeapi.dev/joke/Programming?safe-mode&type=twopart';
 const init = () => {
-  document.querySelector('#app').innerHTML = `
+  const domString = document.querySelector('#app');
+  let jokeData = null;
+  domString.innerHTML = `
     <h1>Joke Generator</h1><br />
     <button class="btn btn-danger" id="click-me">GET A JOKE</button><br />
   `;
@@ -14,10 +13,22 @@ const init = () => {
 
   document
     .querySelector('#click-me')
-    .addEventListener('click', () => getRequest().then(console.warn('fartknocker')));
+    .addEventListener('click', () => {
+      const setupPromise = jokeData ? Promise.resolve(jokeData.setup) : getRequest().then((data) => {
+        jokeData = data;
+        return data.setup;
+      });
 
-  // USE WITH FIREBASE AUTH
-  // ViewDirectorBasedOnUserAuthStatus();
+      setupPromise
+        .then((setup) => {
+          domString.innerHTML += `<p>${setup}</p>`;
+          return jokeData.delivery;
+        })
+        .then((delivery) => {
+          domString.innerHTML += `<p>${delivery}</p>`;
+          jokeData = null; // Reset for the next joke
+        });
+    });
 };
 
 init();
