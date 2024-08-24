@@ -6,6 +6,7 @@ import getRequest from '../api/promises';
 
 // const jokeEndpoint = 'https://v2.jokeapi.dev/joke/Programming?safe-mode&type=twopart';
 const init = () => {
+  // const jokeData = null;
   document.querySelector('#app').innerHTML = `
     <h1>Joke Generator</h1><br />
     <button class="btn btn-danger" id="click-me">GET A JOKE</button><br />
@@ -14,7 +15,11 @@ const init = () => {
 
   document
     .querySelector('#click-me')
-    .addEventListener('click', () => getRequest().then(console.warn('fartknocker')));
+    .addEventListener('click', () => {
+      getRequest().then((data) => {
+        console.warn(data.setup);
+      });
+    });
 
   // USE WITH FIREBASE AUTH
   // ViewDirectorBasedOnUserAuthStatus();
